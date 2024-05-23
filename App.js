@@ -18,27 +18,27 @@ export default function App() {
 };
 
   const fixedPoint1 = {
-    latitude: -22.914219,  // Coordenadas do ponto fixo
+    latitude: -22.914219,  
     longitude: -47.068644,
   };
 
   const fixedPoint2 = {
-    latitude: -22.914273,  // Coordenadas do ponto fixo
+    latitude: -22.914273,  
     longitude: -47.068206,
   };
 
   const fixedPoint3 = {
-    latitude: -22.914073,  // Coordenadas do ponto fixo
+    latitude: -22.914073,  
     longitude: -47.067948,
   };
 
   const fixedPoint4 = {
-    latitude: -22.914281,  // Coordenadas do ponto fixo
+    latitude: -22.914281,  
     longitude: -47.068627,
   };
 
   const fixedPoint5 = {
-    latitude: -22.914388,  // Coordenadas do ponto fixo
+    latitude: -22.914388,  
     longitude: -47.068503,
   };
 
@@ -94,13 +94,19 @@ export default function App() {
         <View style={[styles.fixedPoint5, calculatePosition(fixedPoint5.latitude, fixedPoint5.longitude)]} />
         
       </ImageBackground>
+
+
+      <View style={styles.caixaInferior}>
+      <View style={styles.caixaCoordenadas}>
       <Text>Latitude: {lati}</Text>
       <Text>Longitude: {longi}</Text>
+      </View>
       <Text style={styles.legend1}>Laboratório CAM</Text>
       <Text style={styles.legend2}>Saída de Emergência 1</Text>
       <Text style={styles.legend3}>Saída de Emergência 2</Text>
       <Text style={styles.legend4}>Banheiro Feminino</Text>
       <Text style={styles.legend5}>Banheiro Masculino</Text>
+      </View>
     </View>
   );
 }
@@ -115,14 +121,14 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: width - 40,
     height: height / 1.5,
-    backgroundColor: '#e0e0e0', // Substitua pela sua imagem de mapa
+    backgroundColor: '#e0e0e0', 
     borderRadius: 10,
   },
   bolinha: {
     position: 'absolute',
     width: 20,
     height: 20,
-    backgroundColor: 'blue',
+    backgroundColor: 'red',
     borderRadius: 10,
     transform: [{ translateX: -10 }, { translateY: -10 }],
   },
@@ -130,17 +136,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 15,
     height: 15,
-    backgroundColor: 'red',
+    backgroundColor: 'green',
     borderRadius: 1,
-    transform: [{ translateX: -5 }, { translateY: -5 }], // Corrigido o deslocamento para o ponto fixo
+    transform: [{ translateX: -5 }, { translateY: -5 }], 
   },
   fixedPoint2: {
     position: 'absolute',
     width: 15,
     height: 15,
-    backgroundColor: 'green',
+    backgroundColor: 'blue',
     borderRadius: 1,
-    transform: [{ translateX: -5 }, { translateY: -5 }], // Corrigido o deslocamento para o ponto fixo
+    transform: [{ translateX: -5 }, { translateY: -5 }], 
   },
   fixedPoint3: {
     position: 'absolute',
@@ -148,23 +154,23 @@ const styles = StyleSheet.create({
     height: 15,
     backgroundColor: 'purple',
     borderRadius: 1,
-    transform: [{ translateX: -5 }, { translateY: -5 }], // Corrigido o deslocamento para o ponto fixo
+    transform: [{ translateX: -5 }, { translateY: -5 }], 
   },
   fixedPoint4: {
     position: 'absolute',
     width: 15,
     height: 15,
-    backgroundColor: '#ff0084',
+    backgroundColor: 'orange',
     borderRadius: 1,
-    transform: [{ translateX: -5 }, { translateY: -5 }], // Corrigido o deslocamento para o ponto fixo
+    transform: [{ translateX: -5 }, { translateY: -5 }], 
   },
   fixedPoint5: {
     position: 'absolute',
     width: 15,
     height: 15,
-    backgroundColor: '#ff8c00',
+    backgroundColor: 'pink',
     borderRadius: 1,
-    transform: [{ translateX: -5 }, { translateY: -5 }], // Corrigido o deslocamento para o ponto fixo
+    transform: [{ translateX: -5 }, { translateY: -5 }], 
   },
   legend1: {
     marginTop: 10,
@@ -196,4 +202,16 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
+  caixaCoordenadas: {
+    marginTop: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderColor: 'black',
+    borderWidth: 1,
+    alignItems: 'center',
+    padding: 5
+  },
+  caixaInferior: {
+    backgroundColor: '#377A95',
+    textAlign: 'center'
+  }
 });
