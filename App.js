@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Dimensions, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, ImageBackground, Image } from 'react-native';
 import * as Location from 'expo-location';
 
 const { width, height } = Dimensions.get('window');
@@ -10,12 +10,12 @@ export default function App() {
   const [lati, setLatitude] = useState(null);
   const [longi, setLongitude] = useState(null);
 
- const bounds = {
-  north: -22.9138,
-  south: -22.9145,
-  west: -47.0687,
-  east: -47.0679,
-};
+  const bounds = {
+    north: -22.9138,
+    south: -22.9145,
+    west: -47.0687,
+    east: -47.0679,
+  };
 
   const fixedPoint1 = {
     latitude: -22.914219,  
@@ -83,52 +83,53 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <ImageBackground source={require('./assets/mapa.png')} style={styles.map}>
+    <ImageBackground source={require('./assets/mapa.png')} style={styles.background}>
+      <View style={styles.mapContainer}>
         {location && <View style={[styles.bolinha, calculatePosition(location.latitude, location.longitude)]} />}
-        <View style={[styles.fixedPoint1, calculatePosition(fixedPoint1.latitude, fixedPoint1.longitude)]}>
-        </View>
+        <View style={[styles.fixedPoint1, calculatePosition(fixedPoint1.latitude, fixedPoint1.longitude)]} />
         <View style={[styles.fixedPoint2, calculatePosition(fixedPoint2.latitude, fixedPoint2.longitude)]} />
         <View style={[styles.fixedPoint3, calculatePosition(fixedPoint3.latitude, fixedPoint3.longitude)]} />
         <View style={[styles.fixedPoint4, calculatePosition(fixedPoint4.latitude, fixedPoint4.longitude)]} />
         <View style={[styles.fixedPoint5, calculatePosition(fixedPoint5.latitude, fixedPoint5.longitude)]} />
-        
-      </ImageBackground>
-
-
+      </View>
       <View style={styles.caixaInferior}>
-      <View style={styles.caixaCoordenadas}>
-      <Text>Latitude: {lati}</Text>
-      <Text>Longitude: {longi}</Text>
+         <Text style={styles.tituloCaixaInferior}> Sensores Detectados </Text>
+
+        <View style={styles.caixaCoordenadas}>
+          <Text style={styles.latiLongi}>Latitude: {lati}</Text>
+          <Text style={styles.latiLongi}>Longitude: {longi}</Text>
+        </View>
+
+        <View style={styles.nomesLocais}>
+        <Text style={styles.legend1}> Laboratório CAM</Text>
+        <Text style={styles.legend2}> Saída de Emergência 1</Text>
+        <Text style={styles.legend3}> Saída de Emergência 2</Text>
+        <Text style={styles.legend4}> Banheiro Feminino</Text>
+        <Text style={styles.legend5}> Banheiro Masculino</Text>
+        </View>
       </View>
-      <Text style={styles.legend1}>Laboratório CAM</Text>
-      <Text style={styles.legend2}>Saída de Emergência 1</Text>
-      <Text style={styles.legend3}>Saída de Emergência 2</Text>
-      <Text style={styles.legend4}>Banheiro Feminino</Text>
-      <Text style={styles.legend5}>Banheiro Masculino</Text>
-      </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'flex-end',
   },
-  map: {
-    position: 'relative',
-    width: width - 40,
+  mapContainer: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
     height: height / 1.5,
-    backgroundColor: '#e0e0e0', 
-    borderRadius: 10,
   },
   bolinha: {
     position: 'absolute',
     width: 20,
     height: 20,
-    backgroundColor: 'red',
+    backgroundColor: '#377A95',
     borderRadius: 10,
     transform: [{ translateX: -10 }, { translateY: -10 }],
   },
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 15,
     height: 15,
-    backgroundColor: 'green',
+    backgroundColor: '#69B2F9',
     borderRadius: 1,
     transform: [{ translateX: -5 }, { translateY: -5 }], 
   },
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 15,
     height: 15,
-    backgroundColor: 'blue',
+    backgroundColor: '#69B2F9',
     borderRadius: 1,
     transform: [{ translateX: -5 }, { translateY: -5 }], 
   },
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 15,
     height: 15,
-    backgroundColor: 'purple',
+    backgroundColor: '#69B2F9',
     borderRadius: 1,
     transform: [{ translateX: -5 }, { translateY: -5 }], 
   },
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 15,
     height: 15,
-    backgroundColor: 'orange',
+    backgroundColor: '#69B2F9',
     borderRadius: 1,
     transform: [{ translateX: -5 }, { translateY: -5 }], 
   },
@@ -168,50 +169,69 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 15,
     height: 15,
-    backgroundColor: 'pink',
+    backgroundColor: '#69B2F9',
     borderRadius: 1,
     transform: [{ translateX: -5 }, { translateY: -5 }], 
   },
+  tituloCaixaInferior:{
+    color: '#ffff',
+    fontSize: 25,
+    marginBottom: 50,
+    fontWeight: '300',
+    fontFamily: 'Inter, sans-serif'
+  },
+  nomesLocais: {
+    textAlign: 'right'
+  },
+  
   legend1: {
     marginTop: 10,
-    color: 'red',
+    color: '#ffff',
     fontSize: 12,
-    fontWeight: 'bold',
-  },
+    },
   legend2: {
     marginTop: 10,
-    color: 'green',
+    color: '#ffff',
     fontSize: 12,
-    fontWeight: 'bold',
   },
   legend3: {
     marginTop: 10,
-    color: 'purple',
+    color: '#ffff',
     fontSize: 12,
-    fontWeight: 'bold',
   },
   legend4: {
     marginTop: 10,
-    color: '#ff0084',
+    color: '#ffff',
     fontSize: 12,
-    fontWeight: 'bold',
   },
   legend5: {
     marginTop: 10,
-    color: '#ff8c00',
+    color: '#ffff',
     fontSize: 12,
-    fontWeight: 'bold',
+  },
+  latiLongi:{
+    color: '#377A95'
   },
   caixaCoordenadas: {
     marginTop: 20,
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    borderColor: 'black',
+    borderColor: '#ffff',
+    borderRadius: 15,
     borderWidth: 1,
+    width: '70%',
     alignItems: 'center',
-    padding: 5
+    justifyContent: 'center',
+    padding: 5,
   },
   caixaInferior: {
-    backgroundColor: '#377A95',
-    textAlign: 'center'
+    backgroundColor: '#377A95', 
+    textAlign: 'center',
+    width: '100%',
+    height: '40%',
+    borderTopLeftRadius: 60,
+    borderTopRightRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 20
   }
 });
