@@ -26,7 +26,7 @@ export default function Login(){
                 style={styles.btnOk}
                 onPress={fetchToken}
             >
-                <Text style={{ fontSize: 25 }}>Sign In</Text>
+                <Text style={{ fontSize: 25 }}>Entrar</Text>
             </TouchableOpacity>
 
 
@@ -34,3 +34,9 @@ export default function Login(){
 
     )
 }
+
+const styles = StyleSheet.create({
+    
+
+
+})
