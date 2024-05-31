@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Dimensions, Modal, Button } from "react-native";
 import MapView, { Circle, Marker } from "react-native-maps";
 import * as Location from "expo-location";
+import { Feather } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get("window");
 
@@ -164,7 +165,7 @@ export default function Mapa() {
 
 
       <View style={styles.caixaInferior}>
-        <Text style={styles.title}>Sensores Detectados</Text>
+        <Text style={styles.title}> Sensores Detectados <Feather name="map-pin" size={24} color="white" /></Text>
         <View style={styles.caixaCoordenadas}>
           <View style={styles.textContainer}>
             <Text style={styles.text}>{textLatitude}</Text>
