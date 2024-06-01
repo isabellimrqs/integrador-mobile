@@ -11,8 +11,11 @@
   "dependencies": {
     "@expo/metro-runtime": "~3.2.1",
     "@expo/vector-icons": "^14.0.2",
+    "@hookform/resolvers": "^3.4.2",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/checkbox": "^0.5.17",
     "@react-navigation/stack": "^6.3.29",
+    "axios": "^1.7.2",
     "expo": "~51.0.8",
     "expo-linear-gradient": "^13.0.2",
     "expo-location": "^17.0.1",
@@ -20,10 +23,12 @@
     "ngrok": "4.3.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.51.5",
     "react-native": "0.74.1",
     "react-native-maps": "^1.14.0",
     "react-native-popup-menu": "^0.16.1",
-    "react-native-web": "~0.19.10"
+    "react-native-web": "~0.19.10",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
