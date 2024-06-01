@@ -8,48 +8,45 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import axios from 'axios'; 
 
-export default function Login() {
-    const navigation = useNavigation();
+export default function Login({ navigation }) {
+    const [usuario, setUsuario] = useState('');
+    const [senha, setSenha] = useState('');
+    const [token, setToken] = useState(null);
 
-    const [form, setForm] = useState({
-        usuario: '',
-        senha: '',
-        errors: { usuario: '', senha: '' }
-    });
-
-    const handleLoginPress = async () => {
-        if (!form.usuario || !form.senha) {
-            setForm(prevState => ({
-                ...prevState,
-                errors: { usuario: 'Usuário é obrigatório', senha: 'Senha é obrigatória' }
-            }));
-            return;
-        }
-
+    useEffect(() => {
+    // Função assíncrona para salvar o token no AsyncStorage
+    const saveTokenToAsyncStorage = async () => {
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/token/', {
-                username: form.usuario,
-                password: form.senha
-            });
-
-            const { access, refresh } = response.data;
-            await AsyncStorage.setItem('access_token', access); 
-            await AsyncStorage.setItem('refresh_token', refresh);
-            console.log('Login bem-sucedido!');
-            navigation.navigate('Mapa');
+            if (token !== null) { // Verifica se o token não é null
+                await AsyncStorage.setItem('token', token);
+                console.log("Token Sign In: ", token);
+            }
         } catch (error) {
-            console.error('Erro de autenticação', error);
+            console.log(error);
         }
     };
 
-    const handleChange = (name, value) => {
-        setForm(prevState => ({
-            ...prevState,
-            [name]: value,
-            errors: { ...prevState.errors, [name]: '' }
-        }));
-    };
+    // Chamada da função para salvar o token quando ele mudar
+    saveTokenToAsyncStorage();
+}, [token]);
 
+
+    const fetchToken = async () =>{
+        try {
+            const response = await axios.post(
+                'http://127.0.0.1:8000/api/token/',
+                {
+                    username: usuario,
+                    password: senha
+                }
+            );
+            setToken(response.data.access);
+            console.log('Token SignIn: ', token);
+            navigation.navigate("Mapa");
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const [lembrar, setLembrar] = useState(false);
 
@@ -72,18 +69,16 @@ export default function Login() {
             <TextInput
                 placeholder='Usuário'
                 style={styles.caixa}
-                value={form.usuario}
-                onChangeText={text => handleChange('usuario', text)}
+                value={usuario}
+                onChangeText={setUsuario}
             />
-            {form.errors.usuario ? <Text style={styles.errorText}>{form.errors.usuario}</Text> : null}
             <TextInput
                 placeholder='Senha'
                 style={styles.caixa}
                 secureTextEntry={true}
-                value={form.senha}
-                onChangeText={text => handleChange('senha', text)}
+                value={senha}
+                onChangeText={setSenha}
             />
-             {form.errors.senha ? <Text style={styles.errorText}>{form.errors.senha}</Text> : null}
             <View style={styles.lembrarContainer}>
                 <TouchableOpacity onPress={toggleLembrar} style={[styles.checkbox, lembrar && styles.checkboxChecked]}>
                     {lembrar && <MaterialIcons name="check" size={styles.checkbox.size} color="white" />}
@@ -93,7 +88,7 @@ export default function Login() {
             </View>
             <TouchableOpacity
                 style={styles.btnOk}
-                onPress={handleLoginPress}
+                onPress={fetchToken}
             >
                 <Text style={{ fontSize: 25, color: '#377A95' }} >Entrar</Text>
             </TouchableOpacity>
@@ -167,19 +162,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 10
-
     },
     lembrarText: {
         fontSize: 15,
         marginLeft: 8,
         color: '#6F6F6F'
-
     },
     esqueceuSenhaText: {
         fontSize: 15,
         marginLeft: 35,
         color: '#6F6F6F'
-
     },
     checkbox: {
         width: 20,
@@ -217,7 +209,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 8
-
     },
     orText: {
         color: '#6F6F6F',
@@ -266,3 +257,5 @@ const styles = StyleSheet.create({
         marginTop: 5
     }
 });
+
+
