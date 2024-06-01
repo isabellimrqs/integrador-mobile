@@ -42,7 +42,9 @@ export default function Login({ navigation }) {
             );
             setToken(response.data.access);
             console.log('Token SignIn: ', token);
-            navigation.navigate("Mapa");
+            if (response.data.access) {
+                navigation.navigate("Mapa");
+            }
         } catch (error) {
             console.log(error);
         }
