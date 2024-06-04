@@ -8,55 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import axios from 'axios'; 
 
-export default function Login({ navigation }) {
-    const [usuario, setUsuario] = useState('');
-    const [senha, setSenha] = useState('');
-    const [token, setToken] = useState(null);
-
-    useEffect(() => {
-    // Função assíncrona para salvar o token no AsyncStorage
-    const saveTokenToAsyncStorage = async () => {
-        try {
-            if (token !== null) { // Verifica se o token não é null
-                await AsyncStorage.setItem('token', token);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    // Chamada da função para salvar o token quando ele mudar
-    saveTokenToAsyncStorage();
-}, [token]);
-
-
-
-    const fetchToken = async () =>{
-        try {
-            const response = await axios.post(
-                'http://192.168.137.1:8000/api/token/', // Substituir pelo IP da máquina
-                {
-                    username: usuario,
-                    password: senha
-                }
-            );
-            setToken(response.data.access);
-            console.log('Token: ', token);
-            if (response.data.access) {
-                navigation.navigate("Mapa");
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-  
-
-    const [lembrar, setLembrar] = useState(false);
-
-    const toggleLembrar = () => {
-        setLembrar(!lembrar);
-    };
+export default function Index({ navigation }) {
 
     return (
         <View style={styles.container}>
@@ -68,55 +20,27 @@ export default function Login({ navigation }) {
                 <Image source={Logo} style={styles.logo} />
             </View>
             <View>
-                <Text style={styles.title}>Bem vindo de volta! </Text>
+                <Text style={styles.title}>Bem vindo! </Text>
             </View>
-            <TextInput
-                placeholder='Usuário'
-                style={styles.caixa}
-                value={usuario}
-                onChangeText={setUsuario}
-            />
-            <TextInput
-                placeholder='Senha'
-                style={styles.caixa}
-                secureTextEntry={true}
-                value={senha}
-                onChangeText={setSenha}
-            />
-            <View style={styles.lembrarContainer}>
-                <TouchableOpacity onPress={toggleLembrar} style={[styles.checkbox, lembrar && styles.checkboxChecked]}>
-                    {lembrar && <MaterialIcons name="check" size={styles.checkbox.size} color="white" />}
-                </TouchableOpacity>
-                <Text style={styles.lembrarText}>Lembrar </Text>
-                <Text style={styles.esqueceuSenhaText}>Esqueceu sua senha?</Text>
-            </View>
+
+            <TouchableOpacity
+                style={styles.btnOk2}
+                onPress={()=>navigation.navigate("Signup")}
+               
+            >
+                <Text style={{ fontSize: 25, color: '#ffff' }} >Cadastrar</Text>
+            </TouchableOpacity>
             <TouchableOpacity
                 style={styles.btnOk}
-                onPress={fetchToken}
+                onPress={()=>navigation.navigate("Login")}
+               
             >
-                <Text style={{ fontSize: 25, color: '#377A95' }} >Entrar</Text>
+                <Text style={{ fontSize: 25, color: '#377A95' }} 
+                >Entrar</Text>
             </TouchableOpacity>
-            <View style={styles.textoNovoUsuario}>
-                <Text style={{ color: '#6F6F6F' }}>Não tem conta? <TouchableOpacity  onPress={()=>navigation.navigate("Signup")}><Text style={{ color: '#4DADAC', fontWeight: '700' }}>Cadastre-se</Text></TouchableOpacity></Text>
-            </View>
 
-            <View style={styles.orContainer}>
-                <View style={[styles.linha, { width: '30%' }]}></View>
-                <Text style={styles.orText}>or</Text>
-                <View style={[styles.linha, { width: '30%' }]}></View>
-            </View>
 
-            <View style={styles.socialContainer}>
-                <View style={styles.socialEspecificOne}>
-                    <AntDesign name="twitter" size={25} style={{ color: 'white' }} />
-                </View>
-                <View style={styles.socialEspecificTwo}>
-                    <MaterialIcons name="facebook" size={31} style={{ color: 'white' }} />
-                </View>
-                <View style={styles.socialEspecificThree}>
-                    <AntDesign name="google" size={25} style={{ color: 'white' }} />
-                </View>
-            </View>
+            
 
         </View>
     );
@@ -132,7 +56,7 @@ const styles = StyleSheet.create({
     },
     containerDois: {
         width: '100%',
-        height: '28%',
+        height: '40%',
         position: 'absolute',
         top: 0,
         borderColor: '#F9F7F7'
@@ -197,6 +121,17 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         width: '80%',
         borderColor: '#377A95',
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    btnOk2: {
+        marginTop: 20,
+        borderWidth: 1,
+        borderRadius: 30,
+        width: '80%',
+        borderColor: '#377A95',
+        backgroundColor: '#377A95',
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',

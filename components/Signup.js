@@ -8,55 +8,48 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import axios from 'axios'; 
 
-export default function Login({ navigation }) {
-    const [usuario, setUsuario] = useState('');
-    const [senha, setSenha] = useState('');
-    const [token, setToken] = useState(null);
+export default function Signup({ navigation }) {
+    const [usuario, setUsuario] = useState('')
+    const [senha, setSenha] = useState('')
+    const [erro, setErro] = useState(null)
+    const [token, setToken] = useState(null)
 
     useEffect(() => {
-    // Função assíncrona para salvar o token no AsyncStorage
-    const saveTokenToAsyncStorage = async () => {
+        // Suponha que você tenha recebido o token como resposta de uma requisição
+        const tokenX = token;
+
+        // Salvar o token no AsyncStorage
+        AsyncStorage.setItem('token', tokenX)
+            .then(() => {
+                if (token != null) {
+                    console.log('Token SignUPX: ', token)
+                    console.log('Token salvo com sucesso!');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao salvar token:', error);
+            });
+    }, [token]);
+
+    const createUser = async () => {
         try {
-            if (token !== null) { // Verifica se o token não é null
-                await AsyncStorage.setItem('token', token);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    // Chamada da função para salvar o token quando ele mudar
-    saveTokenToAsyncStorage();
-}, [token]);
-
-
-
-    const fetchToken = async () =>{
-        try {
-            const response = await axios.post(
-                'http://192.168.137.1:8000/api/token/', // Substituir pelo IP da máquina
+            const response = await axios.post('http://127.0.0.1:8000/api/create_user/',
                 {
                     username: usuario,
-                    password: senha
-                }
-            );
-            setToken(response.data.access);
-            console.log('Token: ', token);
-            if (response.data.access) {
-                navigation.navigate("Mapa");
-            }
+                    password: senha,
+                });
+            const resp = await axios.post('http://127.0.0.1:8000/api/token/',
+                {
+                    username: usuario,
+                    password: senha,
+                })
+            setToken(resp.data.access);
+            navigation.navigate("Login")
         } catch (error) {
-            console.log(error);
+            setErro(error.message);
         }
     };
 
-  
-
-    const [lembrar, setLembrar] = useState(false);
-
-    const toggleLembrar = () => {
-        setLembrar(!lembrar);
-    };
 
     return (
         <View style={styles.container}>
@@ -68,7 +61,7 @@ export default function Login({ navigation }) {
                 <Image source={Logo} style={styles.logo} />
             </View>
             <View>
-                <Text style={styles.title}>Bem vindo de volta! </Text>
+                <Text style={styles.title}>Crie sua conta </Text>
             </View>
             <TextInput
                 placeholder='Usuário'
@@ -83,21 +76,19 @@ export default function Login({ navigation }) {
                 value={senha}
                 onChangeText={setSenha}
             />
-            <View style={styles.lembrarContainer}>
-                <TouchableOpacity onPress={toggleLembrar} style={[styles.checkbox, lembrar && styles.checkboxChecked]}>
-                    {lembrar && <MaterialIcons name="check" size={styles.checkbox.size} color="white" />}
-                </TouchableOpacity>
-                <Text style={styles.lembrarText}>Lembrar </Text>
-                <Text style={styles.esqueceuSenhaText}>Esqueceu sua senha?</Text>
-            </View>
+            <TextInput
+                placeholder='Confirmar senha'
+                style={styles.caixa}
+                secureTextEntry={true}
+            />
             <TouchableOpacity
                 style={styles.btnOk}
-                onPress={fetchToken}
+               
             >
-                <Text style={{ fontSize: 25, color: '#377A95' }} >Entrar</Text>
+                <Text style={{ fontSize: 25, color: '#377A95' }} >Cadastrar</Text>
             </TouchableOpacity>
             <View style={styles.textoNovoUsuario}>
-                <Text style={{ color: '#6F6F6F' }}>Não tem conta? <TouchableOpacity  onPress={()=>navigation.navigate("Signup")}><Text style={{ color: '#4DADAC', fontWeight: '700' }}>Cadastre-se</Text></TouchableOpacity></Text>
+                <Text style={{ color: '#6F6F6F' }}>Já tem conta? <TouchableOpacity  onPress={()=>navigation.navigate("Login")}><Text style={{ color: '#4DADAC', fontWeight: '700' }}>Entrar</Text></TouchableOpacity></Text>
             </View>
 
             <View style={styles.orContainer}>
