@@ -26,30 +26,35 @@ export default function Mapa() {
       nome: "Laboratório CAM",
       latitude: -22.914246, // Laboratório CAM
       longitude: -47.068363,
+      temperatura: "18°"
     },
     {
       id: 2,
       nome: "Laboratório A202",
       latitude: -22.9141901,
-      longitude: -47.0683809, // A202
+      longitude: -47.0683809,
+      temperatura: "22°"      // A202
     },
     {
       id: 3,
       nome: "Estacionamento",
       latitude: -22.914786,
-      longitude: -47.0687305, // Estacionamento
+      longitude: -47.0687305,
+      temperatura: "25°"      // Estacionamento
     },
     {
       id: 4,
       nome: "Quadra",
       latitude: -22.914027,
-      longitude: -47.069041, // Quadra
+      longitude: -47.069041,
+      temperatura: "29°"      // Quadra
     },
     {
       id: 5,
       nome: "AAPM",
       latitude: -22.9142978,
-      longitude: -47.068584, // AAPM
+      longitude: -47.068584,
+      temperatura: "24°"      // AAPM
     },
   ];
 
@@ -150,6 +155,21 @@ export default function Mapa() {
             {selectedPoint && location && (
               <Text style={styles.modalText}>
                 {selectedPoint.nome} está a {getDistance(location.latitude, location.longitude, selectedPoint.latitude, selectedPoint.longitude).toFixed(2)} metros de você.
+              </Text>
+            )}
+            {selectedPoint && location && (
+              <Text style={styles.modalText}>
+                Latitude: {selectedPoint.latitude} 
+              </Text>
+            )}
+            {selectedPoint && location && (
+              <Text style={styles.modalText}>
+              Latitude: {selectedPoint.longitude} 
+              </Text>
+            )}
+            {selectedPoint && location && (
+              <Text style={styles.modalText}>
+              Temperatura: {selectedPoint.temperatura} 
               </Text>
             )}
 

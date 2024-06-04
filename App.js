@@ -22,14 +22,14 @@ export default function App() {
           component={Login}
           options={{ headerShown: false }}
         />
-          <Stack.Screen
-            name="Mapa"
-            component={Mapa}
-            options={{ headerShown: false }}
-          />
         <Stack.Screen
           name="Signup"
           component={Signup}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Mapa"
+          component={Mapa}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
