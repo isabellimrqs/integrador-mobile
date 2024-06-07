@@ -9,52 +9,48 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'; 
 
 export default function Signup({ navigation }) {
-    const [usuario, setUsuario] = useState('')
-    const [senha, setSenha] = useState('')
-    const [erro, setErro] = useState(null)
-    const [token, setToken] = useState(null)
+    const [usuario, setUsuario] = useState('');
+    const [senha, setSenha] = useState('');
+    const [email, setEmail] = useState('');
+    const [erro, setErro] = useState(null);
+    const [token, setToken] = useState(null);
 
     useEffect(() => {
-        // Suponha que você tenha recebido o token como resposta de uma requisição
-        const tokenX = token;
-
-        // Salvar o token no AsyncStorage
-        AsyncStorage.setItem('token', tokenX)
-            .then(() => {
-                if (token != null) {
+        if (token !== null) {
+            AsyncStorage.setItem('token', token)
+                .then(() => {
                     console.log('Token SignUPX: ', token)
                     console.log('Token salvo com sucesso!');
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao salvar token:', error);
-            });
+                })
+                .catch(error => {
+                    console.error('Erro ao salvar token:', error);
+                });
+        }
     }, [token]);
-
+    
     const createUser = async () => {
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/create_user/',
-                {
-                    username: usuario,
-                    password: senha,
-                });
-            const resp = await axios.post('http://127.0.0.1:8000/api/token/',
-                {
-                    username: usuario,
-                    password: senha,
-                })
+            const response = await axios.post('http://192.168.137.1:8000/api/create_user/', {
+                username: usuario,
+                email: email,
+                password: senha,
+            });
+            const resp = await axios.post('http://192.168.137.1:8000/api/token/', {
+                username: usuario,
+                email: email,
+                password: senha,
+            });
             setToken(resp.data.access);
-            navigation.navigate("Login")
+            navigation.navigate("Login");
         } catch (error) {
             setErro(error.message);
         }
     };
 
-
     return (
         <View style={styles.container}>
             <LinearGradient
-                colors={[ '#377A95', '#72A8AC', '#E8E8EA']}
+                colors={['#377A95', '#72A8AC', '#E8E8EA']}
                 style={styles.containerDois}
             />
             <View style={styles.logoContainer}>
@@ -66,29 +62,31 @@ export default function Signup({ navigation }) {
             <TextInput
                 placeholder='Usuário'
                 style={styles.caixa}
-                value={usuario}
                 onChangeText={setUsuario}
+                value={usuario}
             />
+            <TextInput
+                    placeholder='Email'
+                    style={styles.caixa}
+                    onChangeText={setEmail}
+                    value={email}
+                />
             <TextInput
                 placeholder='Senha'
                 style={styles.caixa}
                 secureTextEntry={true}
+                onChangeText={(e) => setSenha(e)}
                 value={senha}
-                onChangeText={setSenha}
-            />
-            <TextInput
-                placeholder='Confirmar senha'
-                style={styles.caixa}
-                secureTextEntry={true}
             />
             <TouchableOpacity
                 style={styles.btnOk}
-               
+                onPress={createUser}
             >
                 <Text style={{ fontSize: 25, color: '#377A95' }} >Cadastrar</Text>
             </TouchableOpacity>
+            {erro && <Text style={styles.error}>{erro}</Text>}
             <View style={styles.textoNovoUsuario}>
-                <Text style={{ color: '#6F6F6F' }}>Já tem conta? <TouchableOpacity  onPress={()=>navigation.navigate("Login")}><Text style={{ color: '#4DADAC', fontWeight: '700' }}>Entrar</Text></TouchableOpacity></Text>
+                <Text style={{ color: '#6F6F6F' }}>Já tem conta? <TouchableOpacity  onPress={() => navigation.navigate("Login")}><Text style={{ color: '#4DADAC', fontWeight: '700' }}>Entrar</Text></TouchableOpacity></Text>
             </View>
 
             <View style={styles.orContainer}>
@@ -108,11 +106,9 @@ export default function Signup({ navigation }) {
                     <AntDesign name="google" size={25} style={{ color: 'white' }} />
                 </View>
             </View>
-
         </View>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         paddingTop: 60,

@@ -29,10 +29,14 @@ export default function Login({ navigation }) {
     saveTokenToAsyncStorage();
 }, [token]);
 
-
+// RODAR O BACK COM O PY MANAGE.PY RUNSERVER E O IP DA MÁQUINA no Android Studio!!!!!
+// Exemplo da máquina que eu estou: py manage.py runserver 192.168.137.1:8000
+// user padrão: smart_user 
+// senha: 123456
 
     const fetchToken = async () =>{
         try {
+
             const response = await axios.post(
                 'http://192.168.137.1:8000/api/token/', // Substituir pelo IP da máquina
                 {

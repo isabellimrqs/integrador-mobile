@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import React from "react";
+import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { MaterialIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
 import Logo from '../assets/logo.png'
-import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; 
-import axios from 'axios'; 
 
 export default function Index({ navigation }) {
 
