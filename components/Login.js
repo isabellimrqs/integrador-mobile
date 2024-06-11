@@ -36,6 +36,7 @@ export default function Login({ navigation }) {
 
     const fetchToken = async () =>{
         try {
+            console.log('Entrou');
 
             const response = await axios.post(
                 'http://192.168.137.1:8000/api/token/', // Substituir pelo IP da máquina

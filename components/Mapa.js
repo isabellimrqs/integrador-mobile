@@ -4,7 +4,7 @@ import MapView, { Circle, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import { Feather } from '@expo/vector-icons';
 
-// RODAR COM O PY MANAGE.PY RUNSERVER E P IP DA MÁQUINA!!!!!
+// RODAR COM O PY MANAGE.PY RUNSERVER E O IP DA MÁQUINA!!!!!
 
 
 const { width, height } = Dimensions.get("window");
@@ -167,7 +167,7 @@ export default function Mapa() {
             )}
             {selectedPoint && location && (
               <Text style={styles.modalText}>
-              Latitude: {selectedPoint.longitude} 
+              Longitude: {selectedPoint.longitude} 
               </Text>
             )}
             {selectedPoint && location && (
